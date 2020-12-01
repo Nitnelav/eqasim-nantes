@@ -12,14 +12,19 @@ def configure(context):
 def execute(context):
     df_bdtopo = context.stage("data.bdtopo.raw")
 
-    df_bdtopo["commune_id"] = df_bdtopo["commune_id"].astype("category")
+    df_bdtopo["commune_id"] = df_bdtopo["commune_id"].astype(float).astype(int).astype("category")
 
     df_codes = context.stage("data.spatial.codes")
-    requested_communes = set(df_codes["commune_id"].unique())
-
+    requested_communes = set(df_codes["commune_id"].astype(int).unique())
     excess_communes = set(df_bdtopo["commune_id"].unique()) - requested_communes
-    if len(excess_communes) > 0:
-        raise RuntimeError("Excess municipalities in BDTOPO")
+
+    # if len(excess_communes) > 0:
+    #     print(set(df_bdtopo["commune_id"].unique()))
+    #     print(requested_communes)
+    #     print(excess_communes)
+    #     raise RuntimeError("Excess municipalities in BDTOPO")
+
+    df_bdtopo = df_bdtopo[df_bdtopo["commune_id"].isin(requested_communes)]
 
     # Clean up street information
     df_bdtopo["street"] = df_bdtopo["raw_street"]

@@ -1,4 +1,8 @@
 __pycache__
 env
 cache
-output
+output*
+.cache
+
+data/nantes_2015
+.vscode

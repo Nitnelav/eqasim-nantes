@@ -1,12 +1,12 @@
 import numpy as np
 import pandas as pd
 
-import data.hts.egt.cleaned
+import data.hts.edgt.cleaned
 import data.hts.entd.cleaned
 
 def configure(context):
     context.stage("data.hts.entd.cleaned")
-    context.stage("data.hts.egt.cleaned")
+    context.stage("data.hts.edgt.cleaned")
     context.stage("data.income.region")
 
 def calculate_cdf(df):
@@ -29,14 +29,14 @@ def execute(context):
     df_entd["source"] = "entd"
 
     # Calculate EGT income distribution
-    df_egt = context.stage("data.hts.egt.cleaned")[0][["household_weight", "income_class", "consumption_units"]].copy()
-    egt_upper_bounds = data.hts.egt.cleaned.INCOME_CLASS_BOUNDS
+    df_egt = context.stage("data.hts.edgt.cleaned")[0][["household_weight", "income_class", "consumption_units"]].copy()
+    egt_upper_bounds = data.hts.edgt.cleaned.INCOME_CLASS_BOUNDS
     egt_lower_bounds = [0] + egt_upper_bounds[:-1]
 
     df_egt["income"] = 12 * 0.5 * df_egt["income_class"].apply(lambda k: egt_lower_bounds[k] + egt_upper_bounds[k] if k >= 0 else np.nan)
     df_egt["income"] /= df_egt["consumption_units"]
     df_egt = pd.DataFrame(calculate_cdf(df_egt))
-    df_egt["source"] = "egt"
+    df_egt["source"] = "edgt"
 
     # Calcultae FiLo income distribution
     df_filo = context.stage("data.income.region")

@@ -16,6 +16,7 @@ COLORS = {
     "census": COLORSET[2],
     "entd": COLORSET[0],
     "egt": COLORSET[1],
+    "edgt": COLORSET[1],
     "synthetic": "#cccccc", #COLORSET[3]
 }
 

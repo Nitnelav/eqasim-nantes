@@ -52,11 +52,11 @@ def execute(context):
     df_codes = context.stage("data.spatial.codes")
 
     excess_communes = set(df["commune_id"].unique()) - set(df_codes["commune_id"].unique())
-    if not excess_communes == {"undefined"}:
+    if (not excess_communes == {"undefined"}) and (not not excess_communes):
         raise RuntimeError("Found additional communes: %s" % excess_communes)
 
     excess_iris = set(df["iris_id"].unique()) - set(df_codes["iris_id"].unique())
-    if not excess_iris == {"undefined"}:
+    if (not excess_iris == {"undefined"}) and (not not excess_iris):
         raise RuntimeError("Found additional IRIS: %s" % excess_iris)
 
     # Age

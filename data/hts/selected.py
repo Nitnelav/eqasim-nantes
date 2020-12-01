@@ -6,6 +6,8 @@ def configure(context):
 
     if hts == "egt":
         context.stage("data.hts.egt.filtered", alias = "hts")
+    elif hts == "edgt":
+        context.stage("data.hts.edgt.filtered", alias = "hts")
     elif hts == "entd":
         context.stage("data.hts.entd.reweighted", alias = "hts")
     else:

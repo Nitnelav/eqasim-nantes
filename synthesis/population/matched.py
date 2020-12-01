@@ -5,6 +5,7 @@ import pandas as pd
 import numba
 
 import data.hts.egt.cleaned
+import data.hts.edgt.cleaned
 import data.hts.entd.cleaned
 
 import multiprocessing as mp
@@ -16,6 +17,7 @@ population sample. This is done by statistical matching.
 
 INCOME_CLASS = {
     "egt": data.hts.egt.cleaned.calculate_income_class,
+    "edgt": data.hts.edgt.cleaned.calculate_income_class,
     "entd": data.hts.entd.cleaned.calculate_income_class,
 }
 

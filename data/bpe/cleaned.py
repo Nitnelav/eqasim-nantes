@@ -54,21 +54,21 @@ def execute(context):
     # Clean activity type
     df["activity_type"] = "other"
     for prefix, activity_type in ACTIVITY_TYPE_MAP:
-        df.loc[df["TYPEQU"].str.startswith(prefix), "activity_type"] = activity_type
+        df.loc[df["typequ"].str.startswith(prefix), "activity_type"] = activity_type
 
     df["activity_type"] = df["activity_type"].astype("category")
 
     # Clean coordinates
-    df["x"] = df["LAMBERT_X"].astype(np.float)
-    df["y"] = df["LAMBERT_Y"].astype(np.float)
+    df["x"] = df["lambert_x"].astype(np.float)
+    df["y"] = df["lambert_y"].astype(np.float)
 
     # Clean IRIS and commune
-    df["iris_id"] = df["DCIRIS"].str.replace("_", "")
-    df.loc[df["DEPCOM"] == df["DCIRIS"], "iris_id"] = "undefined"
-    df.loc[df["DCIRIS"].str.endswith("0000"), "iris_id"] = "undefined"
+    df["iris_id"] = df["dciris"].str.replace("_", "")
+    df.loc[df["depcom"] == df["dciris"], "iris_id"] = "undefined"
+    df.loc[df["dciris"].str.endswith("0000"), "iris_id"] = "undefined"
 
     df["iris_id"] = df["iris_id"].astype("category")
-    df["commune_id"] = df["DEPCOM"].astype("category")
+    df["commune_id"] = df["depcom"].astype("category")
 
     print("Found %d/%d (%.2f%%) observations without IRIS" % (
         (df["iris_id"] == "undefined").sum(), len(df), 100 * (df["iris_id"] == "undefined").mean()

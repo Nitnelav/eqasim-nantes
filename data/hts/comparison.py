@@ -8,7 +8,7 @@ Comparison of various attributes between EGT, ENTD and census.
 """
 
 def configure(context):
-    context.stage("data.hts.egt.filtered")
+    context.stage("data.hts.edgt.filtered")
     context.stage("data.hts.entd.filtered")
     context.stage("data.census.filtered")
 
@@ -40,10 +40,10 @@ def combine(htss):
     return pd.concat(households), pd.concat(persons), pd.concat(trips)
 
 def execute(context):
-    egt = context.stage("data.hts.egt.filtered")
+    edgt = context.stage("data.hts.edgt.filtered")
     entd = context.stage("data.hts.entd.filtered")
 
-    htss = dict(egt = egt, entd = entd)
+    htss = dict(edgt = edgt, entd = entd)
     names = sorted(list(htss.keys()))
 
     # Make data set of all HTS

@@ -9,27 +9,28 @@ This stage loads the raw data from the French service registry.
 
 def configure(context):
     context.config("data_path")
-    context.config("bpe_path", "bpe_2018/bpe18_ensemble_xy.dbf")
+    context.config("bpe_path", "bpe_2015/bpe15_ensemble_xy.dta")
 
     context.stage("data.spatial.codes")
 
 COLUMNS = [
-    "DCIRIS", "LAMBERT_X", "LAMBERT_Y",
-    "TYPEQU", "DEPCOM"
+    "dciris", "lambert_x", "lambert_y",
+    "typequ", "depcom"
 ]
 
 def execute(context):
     df_codes = context.stage("data.spatial.codes")
     requested_departements = df_codes["departement_id"].unique()
+    requested_communes = df_codes["commune_id"].unique()
 
-    table = simpledbf.Dbf5("%s/%s" % (context.config("data_path"), context.config("bpe_path")), codec = "latin1")
+    table_iter = pd.read_stata("%s/%s" % (context.config("data_path"), context.config("bpe_path")), chunksize=10240)
     df_records = []
 
-    with context.progress(total = 2504782, label = "Reading enterprise census ...") as progress:
-        for df_chunk in table.to_dataframe(chunksize = 10240):
+    with context.progress( label = "Reading enterprise census ...") as progress:
+        for df_chunk in table_iter:
             progress.update(len(df_chunk))
 
-            df_chunk = df_chunk[df_chunk["DEP"].isin(requested_departements)]
+            df_chunk = df_chunk[df_chunk["depcom"].isin(requested_communes)]
             df_chunk = df_chunk[COLUMNS]
 
             if len(df_chunk) > 0:
@@ -39,6 +40,6 @@ def execute(context):
 
 def validate(context):
     if not os.path.exists("%s/%s" % (context.config("data_path"), context.config("bpe_path"))):
-        raise RuntimeError("BPE 2018 data is not available")
+        raise RuntimeError("BPE 2015 data is not available")
 
     return os.path.getsize("%s/%s" % (context.config("data_path"), context.config("bpe_path")))

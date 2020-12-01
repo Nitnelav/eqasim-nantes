@@ -84,7 +84,7 @@ def execute(context):
     assert os.path.exists("%s/generic_config.xml" % context.path())
 
     # Adapt config for Île-de-France
-    eqasim.run(context, "org.eqasim.ile_de_france.scenario.RunAdaptConfig", [
+    eqasim.run(context, "org.eqasim.nantes.scenario.RunAdaptConfig", [
         "--input-path", "generic_config.xml",
         "--output-path", "%sconfig.xml" % context.config("output_prefix")
     ])
@@ -115,37 +115,6 @@ def execute(context):
         eqasim.run(context, "org.eqasim.core.scenario.spatial.RunAdjustCapacity", [
             "--input-path", "%snetwork.xml.gz" % context.config("output_prefix"),
             "--output-path", "%snetwork.xml.gz" % context.config("output_prefix"),
-            "--shape-path", "departments.shp",
-            "--shape-attribute", "id",
-            "--shape-value", "75",
-            "--factor", str(0.8)
-        ])
-
-    # Add urban attributes to population and network
-    # (but only if Paris is included in the scenario!)
-    df_codes = context.stage("data.spatial.codes")
-
-    if "75" in df_codes["departement_id"].unique().astype(str):
-        df_shape = context.stage("data.spatial.departments")[["departement_id", "geometry"]].rename(
-            columns = dict(departement_id = "id")
-        )
-        df_shape["id"] = df_shape["id"].astype(str)
-        df_shape.to_file("%s/departments.shp" % context.path())
-
-        eqasim.run(context, "org.eqasim.core.scenario.spatial.RunImputeSpatialAttribute", [
-            "--input-population-path", "prepared_population.xml.gz",
-            "--output-population-path", "prepared_population.xml.gz",
-            "--input-network-path", "ile_de_france_network.xml.gz",
-            "--output-network-path", "ile_de_france_network.xml.gz",
-            "--shape-path", "departments.shp",
-            "--shape-attribute", "id",
-            "--shape-value", "75",
-            "--attribute", "isUrban"
-        ])
-
-        eqasim.run(context, "org.eqasim.core.scenario.spatial.RunAdjustCapacity", [
-            "--input-path", "ile_de_france_network.xml.gz",
-            "--output-path", "ile_de_france_network.xml.gz",
             "--shape-path", "departments.shp",
             "--shape-attribute", "id",
             "--shape-value", "75",

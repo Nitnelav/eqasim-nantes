@@ -2,28 +2,37 @@
 ## based on the synpp package
 
 # This is the path to a directory where the pipeline can store temporary data
-working_directory: cache
+working_directory: .cache
 
 # This section defines which parts of the pipeline should be run
 run:
+  # - data.hts.edgt.raw
+  # - data.hts.edgt.cleaned
+  # - data.hts.edgt.filtered
+  # - synthesis.population.trips
   - synthesis.output # To create the output population in the output_path (see below)
-  #- matsim.output # Uncomment, if you want to run the full simulation (you'll need Java for that)
+  # - matsim.runtime.eqasim
+  - matsim.output # Uncomment, if you want to run the full simulation (you'll need Java for that)
+  # - documentation.paper
 
 # Here the configuraiton of the pipeline starts
 config:
   # Some general configuration
-  processes: 4
+  processes: 14
 
   # Define whether to use ENTD or EGT as the household travel survey (HTS)
-  hts: entd
+  hts: edgt
+  osm_path: "osm/dep44.osm.pbf"
 
   # Define sampling rate and random seed for the output population
-  sampling_rate: 0.001
-  random_seed: 1234
+  sampling_rate: 0.10
+  random_seed: 5236548
 
   # Paths to the input data and where the output should be stored
-  data_path: /path/to/my/data
-  output_path: output
+  data_path: data/nantes_2015
+  output_path: ../Scenarios/output_edgt_0.10
 
   # Only interesting if you run the simulation
-  java_memory: 14G
+  java_memory: 64G
+  # java_binary: C:\Program Files\Java\jdk-11.0.7\bin\java.exe
+  # maven_binary: C:\Program Files\JetBrains\IntelliJ IDEA Community Edition 2020.1.1\plugins\maven\lib\maven3\bin\mvn.cmd

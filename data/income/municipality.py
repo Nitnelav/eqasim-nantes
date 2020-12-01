@@ -39,6 +39,9 @@ def execute(context):
     df["is_missing"] = False
     print("Found %d/%d municipalities which do not have full distribution" % (sum(df["is_imputed"]), len(requested_communes)))
 
+    if sum(df["is_imputed"]) == 0 and len(missing_communes) == 0 :
+        return df[["commune_id", "q1", "q2", "q3", "q4", "q5", "q6", "q7", "q8", "q9", "is_imputed", "is_missing", "reference_median"]]
+
     # First, find suitable distribution for incomplete cases by finding the one with the most similar median
     incomplete_medians = df[df["is_imputed"]]["q5"].values
 

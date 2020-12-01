@@ -37,15 +37,21 @@ def execute(context):
     df_sirene["ape"] = df_sirene["activitePrincipaleEtablissement"]
 
     # Check communes
-    df_sirene["commune_id"] = df_sirene["codeCommuneEtablissement"].astype("category")
+    df_sirene["commune_id"] = df_sirene["codeCommuneEtablissement"].astype(float).astype(int).astype("category")
 
     df_codes = context.stage("data.spatial.codes")
-    requested_communes = set(df_codes["commune_id"].unique())
+    requested_communes = set(df_codes["commune_id"].astype(int).unique())
     excess_communes = set(df_sirene["commune_id"].unique()) - requested_communes
 
     if len(excess_communes) > 0:
+        print(set(df_sirene["commune_id"].unique()))
+        print(requested_communes)
         print(excess_communes)
         raise RuntimeError("Found excess municipalities in SIRENE data")
+
+    df_sirene = df_sirene[df_sirene["commune_id"].isin(requested_communes)]
+
+    print(set(df_sirene["commune_id"].unique()))
 
     # Clean up street information
     df_sirene["street_type"] = df_sirene["typeVoieEtablissement"]

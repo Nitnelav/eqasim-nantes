@@ -18,10 +18,10 @@ def execute(context):
 
     # First, load work
 
-    table = simpledbf.Dbf5("%s/rp_2015/FD_MOBPRO_2015.dbf" % context.config("data_path"))
+    table = simpledbf.Dbf5("%s/rp_2015/FD_MOBPRO_2015_44.dbf" % context.config("data_path"))
     records = []
 
-    with context.progress(label = "Reading work flows ...", total = 7943392) as progress:
+    with context.progress(label = "Reading work flows ...", total = table.numrec) as progress:
         for df_chunk in table.to_dataframe(chunksize = 10240):
             progress.update(len(df_chunk))
 
@@ -39,10 +39,10 @@ def execute(context):
 
     # Second, load education
 
-    table = simpledbf.Dbf5("%s/rp_2015/FD_MOBSCO_2015.dbf" % context.config("data_path"))
+    table = simpledbf.Dbf5("%s/rp_2015/FD_MOBSCO_2015_44.dbf" % context.config("data_path"))
     records = []
 
-    with context.progress(label = "Reading education flows ...", total = 4782736) as progress:
+    with context.progress(label = "Reading education flows ...", total = table.numrec) as progress:
         for df_chunk in table.to_dataframe(chunksize = 10240):
             progress.update(len(df_chunk))
 

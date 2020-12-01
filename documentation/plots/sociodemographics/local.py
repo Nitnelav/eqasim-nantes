@@ -44,8 +44,8 @@ def execute(context):
     data = context.stage("data")
 
     cases = [
-        dict(commune = 75113, title = "13th Arrondissement"),
-        dict(commune = 94028, title = "Alfortville"),
+        dict(commune = 44109, title = "Nantes Centre"),
+        dict(commune = 44158, title = "Saint Etienne de Montluc"),
     ]
 
     plt.figure(figsize = plotting.WIDE_FIGSIZE)

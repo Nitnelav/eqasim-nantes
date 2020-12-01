@@ -18,7 +18,7 @@ def execute(context):
     df_distance = hts_comparison["distance_distribution"]
 
     f_entd = df_distance["hts"] == "entd"
-    f_egt = df_distance["hts"] == "egt"
+    f_egt = df_distance["hts"] == "edgt"
 
     plt.figure()
 
@@ -50,7 +50,7 @@ def execute(context):
     df_age = hts_comparison["age_distribution"]
 
     f_entd = df_age["hts"] == "entd"
-    f_egt = df_age["hts"] == "egt"
+    f_egt = df_age["hts"] == "edgt"
     f_census = df_age["hts"] == "census"
 
     plt.figure()

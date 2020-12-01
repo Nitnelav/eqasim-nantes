@@ -8,14 +8,17 @@ they can be translated into each other. These are mainly IRIS, commune,
 departement and région.
 """
 
-YEAR = 2017
+YEAR = 2015
 SOURCE = "codes_%d/reference_IRIS_geo%d.xls" % (YEAR, YEAR)
 
 def configure(context):
     context.config("data_path")
 
-    context.config("regions", [11])
-    context.config("departments", [])
+    context.config("regions", [52])
+    context.config("departments", [44])
+    # context.config("comunes", [44109, 44162, 44020, 44143, 44215, 44190, 44009, 44172, 44026, 44035, 44114])
+    # for tests
+    # context.config("comunes", [44109])
 
 def execute(context):
     # Load IRIS registry
@@ -37,12 +40,16 @@ def execute(context):
     # Filter zones
     requested_regions = list(map(int, context.config("regions")))
     requested_departments = list(map(str, context.config("departments")))
+    # requested_comunes = list(map(str, context.config("comunes")))
 
     if len(requested_regions) > 0:
         df_codes = df_codes[df_codes["region_id"].isin(requested_regions)]
 
     if len(requested_departments) > 0:
         df_codes = df_codes[df_codes["departement_id"].isin(requested_departments)]
+
+    # if len(requested_comunes) > 0:
+    #     df_codes = df_codes[df_codes["commune_id"].isin(requested_comunes)]
 
     df_codes["iris_id"] = df_codes["iris_id"].cat.remove_unused_categories()
     df_codes["commune_id"] = df_codes["commune_id"].cat.remove_unused_categories()

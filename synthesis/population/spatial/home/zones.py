@@ -46,12 +46,12 @@ def execute(context):
         df_candidates = df_municipalities[
             ~df_municipalities["has_iris"] &
             (df_municipalities["departement_id"].astype(str) == departement_id)]
-
+            
         df_target = df_households[
             ~f_has_commune &
             (df_households["departement_id"] == departement_id)].copy()
 
-        weights = df_candidates["population"].values.astype(float)
+        weights = df_candidates["population"].fillna(0.0).values.astype(float)
         weights /= np.sum(weights)
 
         indices = np.repeat(np.arange(weights.shape[0]), random.multinomial(len(df_target), weights))
