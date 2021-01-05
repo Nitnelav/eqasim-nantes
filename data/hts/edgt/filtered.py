@@ -42,4 +42,6 @@ def execute(context):
 
     hts.check(df_households, df_persons, df_trips)
 
+    df_trips.to_csv("/home/valoo/reference_edgt.csv", sep=";")
+
     return df_households, df_persons, df_trips

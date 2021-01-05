@@ -7,13 +7,12 @@ working_directory: .cache
 # This section defines which parts of the pipeline should be run
 run:
   # - data.hts.edgt.raw
-  # - data.hts.edgt.cleaned
-  # - data.hts.edgt.filtered
-  # - synthesis.population.trips
+  # - data.hts.entd.cleaned
+  # - data.hts.entd.filtered
+  # - synthesis.population.matched
   - synthesis.output # To create the output population in the output_path (see below)
   # - matsim.runtime.eqasim
   - matsim.output # Uncomment, if you want to run the full simulation (you'll need Java for that)
-  # - documentation.paper
 
 # Here the configuraiton of the pipeline starts
 config:
@@ -25,14 +24,15 @@ config:
   osm_path: "osm/dep44.osm.pbf"
 
   # Define sampling rate and random seed for the output population
-  sampling_rate: 0.10
-  random_seed: 5236548
+  sampling_rate: 0.01
+  random_seed: 2433823
 
   # Paths to the input data and where the output should be stored
   data_path: data/nantes_2015
-  output_path: ../Scenarios/output_edgt_0.10
+  output_path: ../Scenarios/output_edgt_1%
+  output_prefix: "nantes_"
 
   # Only interesting if you run the simulation
-  java_memory: 64G
+  java_memory: 40G
   # java_binary: C:\Program Files\Java\jdk-11.0.7\bin\java.exe
   # maven_binary: C:\Program Files\JetBrains\IntelliJ IDEA Community Edition 2020.1.1\plugins\maven\lib\maven3\bin\mvn.cmd

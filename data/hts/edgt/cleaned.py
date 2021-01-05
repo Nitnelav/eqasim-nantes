@@ -1065,7 +1065,7 @@ def execute(context):
     df_trips["mode"] = df_trips["mode"].astype("category")
 
     # Further trip attributes
-    df_trips["euclidean_distance"] = df_trips["DOIB"] * 1000.0
+    df_trips["euclidean_distance"] = df_trips["DOIB"]
 
     # Trip times
     df_trips["departure_time"] = df_trips["D4A"] * 3600.0 + df_trips["D4B"] * 60.0

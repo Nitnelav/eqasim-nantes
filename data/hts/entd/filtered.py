@@ -38,4 +38,7 @@ def execute(context):
     df_trips = df_trips[hts.TRIP_COLUMNS + ["routed_distance"]]
 
     hts.check(df_households, df_persons, df_trips)
+
+    df_trips.to_csv("/home/valoo/reference_entd.csv", sep=";")
+
     return df_households, df_persons, df_trips

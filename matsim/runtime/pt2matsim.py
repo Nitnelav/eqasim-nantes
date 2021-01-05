@@ -10,7 +10,7 @@ def configure(context):
     context.stage("matsim.runtime.java")
     context.stage("matsim.runtime.maven")
 
-    context.config("pt2matsim_version", "20.10")
+    context.config("pt2matsim_version", "20.5")
 
 def run(context, command, arguments):
     version = context.config("pt2matsim_version")
@@ -27,21 +27,17 @@ def execute(context):
     version = context.config("pt2matsim_version")
 
     # Clone repository and checkout version
-    # git.run(context, [
-    #     "clone", "https://github.com/Nitnelav/pt2matsim.git",
-    #     "--branch", "v%s" % version,
-    #     "--single-branch", "pt2matsim",
-    #     "--depth", "1"
-    # ])
-
     git.run(context, [
-<<<<<<< HEAD
-        "clone",  "/home/valoo/IFSTTAR/pt2matsim",
-=======
-        "clone",  "/home/valoo/Projects/IFSTTAR/pt2matsim",
->>>>>>> db52c09d22298a636118abb19270349727754b52
-        "pt2matsim"
+        "clone", "https://github.com/matsim-org/pt2matsim",
+        "--branch", "v%s" % version,
+        "--single-branch", "pt2matsim",
+        "--depth", "1"
     ])
+
+    # git.run(context, [
+    #     "clone",  "/home/valoo/Projects/IFSTTAR/pt2matsim",
+    #     "pt2matsim"
+    # ])
 
     # Build pt2matsim
     maven.run(context, ["package"], cwd = "%s/pt2matsim" % context.path())

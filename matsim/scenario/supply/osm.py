@@ -26,7 +26,7 @@ def execute(context):
             '<param name="outputCoordinateSystem" value="null" />',
             '<param name="outputCoordinateSystem" value="EPSG:2154" />'
         )
-        
+
         content = content.replace(
             '<param name="outputDetailedLinkGeometryFile" value="null" />',
             '<param name="outputDetailedLinkGeometryFile" value="network.csv" />',

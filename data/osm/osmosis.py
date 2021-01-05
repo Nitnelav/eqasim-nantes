@@ -2,7 +2,7 @@ import subprocess as sp
 import shutil, os
 
 def configure(context):
-    context.config("osmosis_binary", "osmosis")
+    context.config("osmosis_binary", "/opt/osmosis/bin/osmosis")
 
     context.config("java_binary", "java")
     context.config("java_memory", "50G")

@@ -68,7 +68,7 @@ def execute(context):
         railway_tags = context.config("osm_railways")
 
         data.osm.osmosis.run(context, [
-            "--read-%s" % mode, "%s/%s" % (context.config("data_path"), path),
+            "--read-%s" % mode, "/home/valoo/Projects/IFSTTAR/eqasim-nantes/%s/%s" % (context.config("data_path"), path),
             "--tag-filter", "accept-ways", "highway=%s" % highway_tags, "railway=%s" % railway_tags,
             "--bounding-polygon", "file=%s/boundary.poly" % context.path(), "completeWays=yes",
             "--write-pbf", "filtered_%d.osm.pbf" % index
