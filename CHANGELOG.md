@@ -2,6 +2,9 @@
 
 **Under development**
 
+- Bugfix: Do not execute "urban" attribute imputation twice
+- Bugfix: Do not consider *inactive* enterprises from SIRENE
+- Update analysis scripts
 - Remove CRS warnings
 - Bugfix: Handle case if very last activity chain in population ends with tail
 - Speed up and improve testing
