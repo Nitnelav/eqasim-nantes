@@ -23,6 +23,9 @@ def execute(context):
     df_trips = df_trips.rename(columns = { "person_id": "hts_id" })
     df_trips = pd.merge(df_matching, df_trips, on = "hts_id")
 
+    # Sort to fix issue
+    df_trips = df_trips.sort_values(by=["person_id", "trip_id"])
+
     # Diversify departure times
     random = np.random.RandomState(context.config("random_seed"))
     counts = df_trips[["person_id", "trip_id"]].groupby("person_id").size().reset_index(name = "count")["count"].values
