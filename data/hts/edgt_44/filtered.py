@@ -32,8 +32,8 @@ def execute(context):
     df_households = df_households[df_households["household_id"].isin(df_persons["household_id"])]
 
     # Finish up
-    df_households = df_households[hts.HOUSEHOLD_COLUMNS]
-    df_persons = df_persons[hts.PERSON_COLUMNS]
+    df_households = df_households[hts.HOUSEHOLD_COLUMNS + ["number_of_motorcycles"]]
+    df_persons = df_persons[hts.PERSON_COLUMNS + ["uses_motorcycle"]]
     df_trips = df_trips[hts.TRIP_COLUMNS + ["routed_distance", "euclidean_distance"]]
 
     hts.check(df_households, df_persons, df_trips)

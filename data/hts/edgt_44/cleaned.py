@@ -90,8 +90,9 @@ def execute(context):
     df_persons["studies"] = df_persons["P7"].isin(["3", "4", "5"])
 
     # Number of vehicles
-    df_households["number_of_vehicles"] = df_households["M6"] + df_households["M5"]
-    df_households["number_of_vehicles"] = df_households["number_of_vehicles"].astype(int)
+    df_households["number_of_cars"] = df_households["M5"].astype(np.int)
+    df_households["number_of_motorcycles"] = df_households["M6"].astype(np.int)
+    df_households["number_of_vehicles"] = df_households["number_of_cars"] + df_households["number_of_motorcycles"]
     df_households["number_of_bikes"] = df_households["M7"].astype(int)
 
     # License
@@ -99,6 +100,8 @@ def execute(context):
 
     # Has subscription (not availabile in EDGT 44)
     df_persons["has_pt_subscription"] = False
+
+    df_persons["uses_motorcycle"] = (df_persons["P21"] == "1") | (df_persons["P21"] == "2")
 
     # Survey respondents 
     # PENQ 1 : fully awnsered the travel questionary section, having a chain or non-movers

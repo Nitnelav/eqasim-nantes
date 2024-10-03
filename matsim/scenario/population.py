@@ -41,6 +41,9 @@ def add_person(writer, person, activities, trips):
     writer.add_attribute("carAvailability", "java.lang.String", person[PERSON_FIELDS.index("car_availability")])
     writer.add_attribute("bikeAvailability", "java.lang.String", person[PERSON_FIELDS.index("bike_availability")])
 
+    if getattr(person, "motorcycle_availability", -1) != -1:
+        writer.add_attribute("motorcycleAvailability", "java.lang.String", person.motorcycle_availability)
+
     writer.add_attribute("censusHouseholdId", "java.lang.Long", person[PERSON_FIELDS.index("census_household_id")])
     writer.add_attribute("censusPersonId", "java.lang.Long", person[PERSON_FIELDS.index("census_person_id")])
 
@@ -96,7 +99,10 @@ def execute(context):
 
     df_persons = context.stage("synthesis.population.enriched")
     df_persons = df_persons.sort_values(by = ["household_id", "person_id"])
-    df_persons = df_persons[PERSON_FIELDS]
+    if "motorcycle_availability" in df_persons:
+        df_persons = df_persons[PERSON_FIELDS + ["motorcycle_availability"]]
+    else:
+        df_persons = df_persons[PERSON_FIELDS]
 
     df_activities = context.stage("synthesis.population.activities").sort_values(by = ["person_id", "activity_index"])
     df_locations = context.stage("synthesis.population.spatial.locations")[[

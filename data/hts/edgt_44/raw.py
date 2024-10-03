@@ -23,6 +23,7 @@ HOUSEHOLD_COLUMNS = {
 PERSON_COLUMNS = {
     "ECH": str, "PTIR": str, "PER": int, "PP2": str, "PENQ": int,
     "P3": int, "P2": int, "P4": int,
+    "P20": str, "P21": str, "P23": str, "P23A": str, "P25": str, "P24": str,
     "P7": str, "P12": str,
     "P9": str, "P5": str,
     "COEP": float, "COEQ": float, "P1": int

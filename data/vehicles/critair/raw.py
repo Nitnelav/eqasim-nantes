@@ -28,7 +28,7 @@ def execute(context):
         df_vehicle_reg_counts = pd.read_excel(
             "%s/vehicles_%s/Parc_VP_Regions_%s.xlsx" % (context.config("data_path"), year, year)
         )
-    
+
     df_vehicle_com_counts["region_id"] = df_vehicle_com_counts["Code région"].astype("category")
     df_vehicle_com_counts["departement_id"] = df_vehicle_com_counts["Code départment"].astype("category")
     df_vehicle_com_counts["commune_id"] = df_vehicle_com_counts["Code commune"].astype("category")

@@ -12,7 +12,7 @@ def configure(context):
 
 def execute(context):
 
-    vehicle_types = [
+    car_types = [
         {
             'type_id': 'default_car', 'nb_seats': 4, 'length': 5.0, 'width': 1.0, 'pce': 1.0, 'mode': "car",
             'hbefa_cat': "PASSENGER_CAR", 'hbefa_tech': "average", 'hbefa_size': "average", 'hbefa_emission': "average",
@@ -35,10 +35,19 @@ def execute(context):
 
             emission = "PC %s Euro-%s" % (tech, euro)
 
-            vehicle_types.append({
-                'type_id': id, 'length': 7.5, 'width': 1.0,
+            car_types.append({
+                'type_id': id, 'length': 7.5, 'width': 1.0, 'mode': 'car',
                 'hbefa_cat': "PASSENGER_CAR", 'hbefa_tech': tech, 'hbefa_size': size, 'hbefa_emission': emission,
             })
 
-    df_types = pd.DataFrame.from_records(vehicle_types)
+    motorcycle_types = [
+        {
+            'type_id': 'default_motorcycle', 'nb_seats': 1, 'length': 2.0, 'width': 1.0, 'pce': 1.0, 'mode': "motorcycle",
+            'hbefa_cat': "MOTORCYCLE", 'hbefa_tech': "average", 'hbefa_size': "average", 'hbefa_emission': "average",
+        },
+    ]
+
+    # TODO : include mototrcycles hbefa categories
+
+    df_types = pd.DataFrame.from_records(car_types + motorcycle_types)
     return df_types
