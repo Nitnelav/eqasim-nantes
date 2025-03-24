@@ -4,6 +4,19 @@ FROM ubuntu:24.04
 # Set environment variables
 ENV DEBIAN_FRONTEND=noninteractive
 
+LABEL org.opencontainers.image.description = """\
+This image is used to run the EQASIM pipeline. It contains the necessary dependencies to build the project : \
+\
+- Java 17 \
+- Maven \
+- Python 3 & Conda \
+- Osmosis 0.48.3 \
+- Git \
+\
+It also creates a conda environment named 'eqasim' with the dependencies specified in the environment.yml file. \
+The environment.yml file can be specified using the 'env_path' build argument. If not specified, the default environment.yml file from the repository will be used.\
+"""
+
 ARG env_path
 
 # Install dependencies
